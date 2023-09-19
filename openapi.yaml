@@ -1,0 +1,53 @@
+openapi: 3.0.1
+info:
+  title: Frequency Calc
+  version: v0.1
+paths:
+  /calculate-frequency:
+    post:
+      tags:
+        - controller
+      operationId: calculateFrequency
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FrequencyRequest'
+        required: true
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FrequencyResponse'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponse'
+components:
+  schemas:
+    FrequencyRequest:
+      required:
+        - input
+      type: object
+      properties:
+        input:
+          type: array
+          items:
+            type: string
+      description: Принимает json c массивом текстовых данных
+    BadRequestResponse:
+      type: object
+    FrequencyResponse:
+      type: object
+      properties:
+        output:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
